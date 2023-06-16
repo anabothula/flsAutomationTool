@@ -1,0 +1,138 @@
+<template>
+    <main class="slds-p-around_small">
+        <div class="fields-and-profiles-selector slds-grid">
+            <div class="fields-selector slds-size_1-of-2 slds-p-around_x-small slds-border_right">
+                <h1 style="font-weight: 600" class="slds-grid slds-align_absolute-center">Fields</h1>
+                <div class="object-name">
+                    <lightning-combobox
+                        name="selObjName"
+                        label="sObject Name"
+                        value={selObjName}
+                        options={objectNames}
+                        disabled={disableObjSelect}
+                        onchange={handleOnChange}
+                    ></lightning-combobox>
+                </div>
+
+                <div class="field-search slds-p-top_x-small">
+                    <lightning-input
+                        type="search"
+                        label="Search field ApiName"
+                        onchange={handleOnChange}
+                        name="fieldSearchKey"
+                        value={fieldSearchKey}
+                        disabled={disableFieldSelect}
+                    ></lightning-input>
+                </div>
+                <div class="field-search-results slds-m-top_small">
+                    <template if:true={availableFields}>
+                        <template for:each={availableFields} for:item="fieldName">
+                            <div class="slds-p-top_x-small" key={fieldName}>
+                                <a href="#" onclick={handleSelect} data-type="field" data-field-name={fieldName}
+                                    >{fieldName}</a
+                                >
+                            </div>
+                        </template>
+                    </template>
+                </div>
+
+                <!-- selected field values -->
+                <div class="selected-fields slds-p-top_medium">
+                    <template if:true={selFieldApiNames}>
+                        <p class="slds-text-heading_small">{selFieldApiNames.length} Selected Fields</p>
+                        <template for:each={selFieldApiNames} for:item="field">
+                            <div class="sel-field slds-p-top_x-small" key={field}>
+                                <lightning-pill
+                                    label={field}
+                                    onremove={handleRemove}
+                                    data-field-api-name={field}
+                                    data-type="field"
+                                ></lightning-pill>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+
+            <!-- profile selector -->
+            <div class="profiles-selector slds-size_1-of-2 slds-p-around_x-small">
+                <h1 style="font-weight: 600" class="slds-grid slds-align_absolute-center">
+                    Profiles or Permission Sets
+                </h1>
+                <div class="profile-filter">
+                    <lightning-combobox
+                        label="Filter"
+                        name="profileFilter"
+                        value={profileFilter}
+                        options={profileFilterOpts}
+                        onchange={handleOnChange}
+                    ></lightning-combobox>
+                </div>
+                <template if:true={isPastedProfileNamesSelected}>
+                    <div class="paste-profiles slds-p-top_x-small">
+                        <lightning-textarea
+                            name="pastedProfileNames"
+                            label="Paste Profile or Permission set Names in seperate line"
+                            onchange={handleProfileNamesPaste}
+                        ></lightning-textarea>
+                        <template if:true={hasInvalidProfileNames}>
+                            <div class="slds-p-top_small">
+                                <div class="slds-text-heading_small slds-text-color_destructive">
+                                    {invalidProfileNames.length} Invalid Names
+                                </div>
+                                <template for:each={invalidProfileNames} for:item="profileName">
+                                    <p key={profileName}>{profileName}</p>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template if:true={isProfileManualSelect}>
+                    <div class="profile-name slds-p-top_x-small">
+                        <lightning-input
+                            type="search"
+                            label="Search Profile or Permission Set Name"
+                            name="profileSearchKey"
+                            value={profileSearchKey}
+                            onchange={handleOnChange}
+                        ></lightning-input>
+                    </div>
+
+                    <div class="action-div slds-m-top_small">
+                        <!-- Search Results for the profiles -->
+
+                        <div class="profile-search-results">
+                            <template for:each={availableProfiles} for:item="profileName">
+                                <div class="slds-p-top_x-small" key={profileName}>
+                                    <a
+                                        href="#"
+                                        onclick={handleSelect}
+                                        data-type="profile"
+                                        data-profile-name={profileName}
+                                        >{profileName}</a
+                                    >
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+                <!-- selected profiles -->
+                <template if:true={hasSelectedProfiles}>
+                    <div class="selected-profiles slds-p-top_small">
+                        <p class="slds-text-heading_small">{selProfileNames.length} Selected Names</p>
+                        <template for:each={selProfileNames} for:item="profileName">
+                            <div class="slds-p-top_x-small" key={profileName}>
+                                <lightning-pill
+                                    label={profileName}
+                                    onremove={handleRemove}
+                                    data-type="profile"
+                                    data-profile-name={profileName}
+                                ></lightning-pill>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </main>
+</template>

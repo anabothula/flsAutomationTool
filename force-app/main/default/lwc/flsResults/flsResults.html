@@ -1,0 +1,22 @@
+<template>
+    <template if:true={hasErrors}>
+        <div class="errors">
+            <lightning-datatable
+                key-field="fieldName"
+                data={errors}
+                columns={columns}
+                hide-checkbox-column
+                show-row-number-column
+            >
+            </lightning-datatable>
+        </div>
+    </template>
+    <template if:false={hasErrors}>
+        <div class="slds-p-around_medium">
+            <h1 class="slds-text-heading_small">FLS updated successfully for these fields</h1>
+            <template for:each={modifiedFields} for:item="field">
+                <div class="slds-p-top_x-small" key={field}>{field}</div>
+            </template>
+        </div>
+    </template>
+</template>

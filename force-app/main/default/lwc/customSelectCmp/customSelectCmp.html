@@ -1,0 +1,18 @@
+<template>
+    <div class={wrapperDivClasses}>
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select" onchange={handleOnChange}>
+                        <!-- <template for:each={options} for:item="opt">
+                            <option key={opt.value} value={opt.value} selected={opt.selected}>{opt.label}</option>
+                        </template> -->
+                        <option value="none">None</option>
+                        <option value="Read Only">Read Only</option>
+                        <option value="Edit">Edit</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

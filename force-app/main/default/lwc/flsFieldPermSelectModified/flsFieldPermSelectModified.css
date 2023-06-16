@@ -1,0 +1,102 @@
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    position: sticky;
+    left: 0px;
+    width: 98vw;
+    gap: 10px;
+}
+
+.actions-wrapper {
+    background-color: white;
+    position: relative;
+    z-index: 999;
+}
+
+.actions .set-as,
+.set-default-perms,
+.column-width {
+    display: flex;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+table tr > th:first-child {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+table tr:hover th:first-child {
+    background-color: var(--lwc-colorBackgroundRowHover);
+}
+
+table tr > th.profile-name-col::after {
+    box-shadow: 4px 0 7px -4px inset;
+    content: " ";
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 7px;
+}
+
+table {
+    position: relative;
+    table-layout: fixed;
+}
+
+/* .slds-table th,
+.slds-table td {
+    white-space: pre-wrap;
+} */
+
+thead {
+    --lwc-tableCellSpacing: 1rem 0.1rem;
+    position: sticky;
+    z-index: 99;
+}
+
+thead.aura-app {
+    top: 0px;
+}
+
+thead.aura-app tr th {
+    background-color: rgb(243, 243, 243);
+}
+
+thead.production {
+    top: calc(2.4rem + var(--lwc-heightHeader, 3.125rem));
+}
+
+thead.sandbox {
+    top: calc(4.5rem + var(--lwc-heightHeader, 3.125rem));
+}
+
+td.field-cell {
+    --lwc-tableCellSpacing: 0rem;
+}
+
+.profile-sel {
+    font-weight: 600;
+}
+
+@media screen and (max-width: 980px) {
+    thead.production {
+        top: calc(2.4rem + (2 * var(--lwc-heightHeader, 3.125rem)));
+    }
+
+    thead.sandbox {
+        top: calc(4.5rem + (2 * var(--lwc-heightHeader, 3.125rem)));
+    }
+}

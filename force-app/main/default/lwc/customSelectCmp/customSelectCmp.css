@@ -1,0 +1,10 @@
+.select-wrapper {
+    margin: 0.5rem;
+}
+
+.value-changed-style {
+    margin: 0.4rem;
+    padding: 0.1rem;
+    background-color: #69c;
+    border-radius: 7px;
+}

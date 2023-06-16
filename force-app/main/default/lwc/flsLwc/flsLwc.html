@@ -1,0 +1,104 @@
+<template>
+    <template if:true={canUseApp}>
+        <main class={mainClasses}>
+            <template if:true={isLoading}>
+                <lightning-spinner size="large"></lightning-spinner>
+            </template>
+            <header>
+                <template if:true={customToast}>
+                    <div class="custom-toast">
+                        <!-- custom toast for aura app -->
+                        <div class="slds-notify_container">
+                            <div class={customToastClasses} role="status">
+                                <div class="slds-notify__content">
+                                    <h2 class="slds-text-heading_small">{customToast.message}</h2>
+                                </div>
+                                <div class="slds-notify__close">
+                                    <lightning-button-icon
+                                        icon-name="utility:close"
+                                        size="small"
+                                        onclick={handleToastClose}
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </header>
+            <article class="slds-p-vertical_small">
+                <section if:true={showFieldSelectionSection}>
+                    <lightning-tabset active-tab-value={operationType}>
+                        <lightning-tab label="FLS Data Load" value="FLS dataload" onactive={handleActiveTab}>
+                            <div class="slds-p-left_medium">
+                                <c-fls-data-load
+                                    profile-map={profileMap}
+                                    onloading={handleSetLoading}
+                                    is-debug={debug}
+                                ></c-fls-data-load>
+                            </div>
+                        </lightning-tab>
+                        <lightning-tab label="Manual FLS" value="FLS Manual changes" onactive={handleActiveTab}>
+                            <c-fls-fields-select
+                                sel-field-api-names={copyToFields}
+                                profile-map={profileMap}
+                                profile-filter={profileFilter}
+                                is-debug={debug}
+                            ></c-fls-fields-select>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </section>
+                <section if:true={showFieldPermissionsSection}>
+                    <c-fls-field-perm-select-modified
+                        copy-to-fields={copyToFields}
+                        profile-filter={profileFilter}
+                        copy-to-profiles={selProfileNames}
+                        field-parent-ids={fieldParentIds}
+                        profile-map={profileMap}
+                        pre-load-data={preLoadData}
+                        is-dataload={isFLSDataload}
+                        onloading={handleSetLoading}
+                        oncolumnwidth={handletotColumnsWidthChange}
+                        is-debug={debug}
+                    ></c-fls-field-perm-select-modified>
+                </section>
+
+                <footer class={footerClasses} style={footerWidth}>
+                    <div class="footer-inner">
+                        <div class="left-btn">
+                            <template if:true={showFieldPermissionsSection}>
+                                <lightning-button
+                                    label="Back"
+                                    variant="neutral"
+                                    onclick={handleBack}
+                                ></lightning-button>
+                            </template>
+                        </div>
+                        <div class="right-btn">
+                            <template if:false={showSaveBtn}>
+                                <lightning-button
+                                    label={nextLabel}
+                                    variant="brand"
+                                    onclick={handleNext}
+                                    disabled={isLoading}
+                                ></lightning-button>
+                            </template>
+                            <template if:true={showSaveBtn}>
+                                <lightning-button
+                                    label="Save"
+                                    variant="brand"
+                                    onclick={handleSave}
+                                    disabled={isLoading}
+                                ></lightning-button>
+                            </template>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </main>
+    </template>
+    <template if:false={canUseApp}>
+        <div class="slds-text-heading_medium slds-align_absolute-center slds-grid slds-p-around_large">
+            You don't have access to use this tool. Please contact System Admin to get access
+        </div>
+    </template>
+</template>

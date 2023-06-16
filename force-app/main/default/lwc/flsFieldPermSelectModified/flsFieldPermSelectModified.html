@@ -1,0 +1,122 @@
+<template>
+    <div class="main">
+        <!-- actions -->
+        <div class="actions-wrapper" style={actionsWrapperWidth}>
+            <div class="actions">
+                <div class="set-as" title={disabledMessage}>
+                    <div class="slds-p-right_small">Set FLS as :</div>
+                    <lightning-combobox
+                        options={options}
+                        label=""
+                        variant="label-hidden"
+                        onchange={handleBulkFLSChange}
+                        disabled={disableBulkFLSChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="column-width">
+                    <p class="slds-p-right_small">Column Width :</p>
+                    <div style="max-width: 60px">
+                        <lightning-input
+                            type="number"
+                            name="columnWidth"
+                            label=""
+                            value={columnWidth}
+                            variant="label-hidden"
+                            onblur={handleColWidthOnBlur}
+                            onchange={handleColWidthOnChange}
+                            disabled={disableColumnWidth}
+                        ></lightning-input>
+                    </div>
+                </div>
+                <div class="select-all-fields">
+                    <lightning-button
+                        label={allFieldSelectLabel}
+                        variant="neutral"
+                        onclick={handleBulkFieldCheck}
+                    ></lightning-button>
+                </div>
+                <div class="export-fls">
+                    <lightning-button label="Export" variant="brand" onclick={handleExport}></lightning-button>
+                </div>
+            </div>
+        </div>
+        <!-- table -->
+        <template if:true={permissionSets}>
+            <table
+                class="slds-table slds-table_cell-buffer slds-table_bordered"
+                aria-labelledby="element-with-table-label other-element-with-table-label"
+            >
+                <colgroup>
+                    <col style="width: 300px" class="profile-col" />
+                    <template if:true={copyToFields}>
+                        <template for:each={copyToFields} for:item="field">
+                            <col style="width: 200px" key={field} class={field} />
+                        </template>
+                    </template>
+                </colgroup>
+
+                <!-- table header  -->
+                <thead class={theadClass}>
+                    <tr class="slds-line-height_reset">
+                        <!-- bulk profile select checkbox -->
+                        <th class={profileNameColClasses} style="padding-right: 9px">
+                            <lightning-input
+                                label="Field-Level Security for Profile"
+                                type="checkbox"
+                                onchange={handleBulkProfileCheck}
+                                class="checkbox-select bulk-profile-select"
+                            ></lightning-input>
+                        </th>
+
+                        <template if:true={tableFieldHeaders}>
+                            <template for:each={tableFieldHeaders} for:item="fieldHeader">
+                                <th class="slds-truncate" scope="col" key={fieldHeader.fieldName}>
+                                    <div class="flex-center" title={fieldHeader.fullName}>
+                                        <div class="slds-p-left_x-small">
+                                            <lightning-input
+                                                label={fieldHeader.fieldName}
+                                                type="checkbox"
+                                                data-name={fieldHeader.fullName}
+                                                onchange={handleFieldSelect}
+                                                class="checkbox-select field-header-select"
+                                            ></lightning-input>
+                                        </div>
+                                    </div>
+                                </th>
+                            </template>
+                        </template>
+                    </tr>
+                </thead>
+                <!-- table body perms -->
+                <tbody>
+                    <template for:each={permissionSets} for:item="perm">
+                        <tr class="slds-hint-parent" key={perm.Id} data-id={perm.Id}>
+                            <th class={profileNameColClasses} role="gridcell">
+                                <lightning-input
+                                    type="checkbox"
+                                    label={perm.Name}
+                                    onchange={handleProfileSelect}
+                                    class="checkbox-select profile-sel"
+                                    data-id={perm.Id}
+                                ></lightning-input>
+                            </th>
+
+                            <template if:true={perm.fields}>
+                                <template for:each={perm.fields} for:item="field">
+                                    <td key={field.key} class="field-cell">
+                                        <c-custom-select-cmp
+                                            field={field}
+                                            sel-val={field.selVal}
+                                            onpermchange={handlePermChange}
+                                            old-sel-val={field.oldSelVal}
+                                        ></c-custom-select-cmp>
+                                    </td>
+                                </template>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    </div>
+</template>

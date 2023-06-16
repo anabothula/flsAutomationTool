@@ -1,0 +1,9 @@
+.fields-and-profiles-selector {
+    display: flex;
+}
+
+.profile-search-results,
+.field-search-results {
+    max-height: 160px;
+    overflow: auto;
+}
