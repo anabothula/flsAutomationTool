@@ -7,5 +7,5 @@
 
 # How to use 
 <video width="320" height="240" controls>
-  <source src="./assets/flsTool.webm" type="video/webm">
+  <source src="/assets/flsTool.webm" type="video/webm">
 </video>
