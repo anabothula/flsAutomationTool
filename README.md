@@ -2,6 +2,7 @@
 
 - Deploy the package.xml to the desired org
 - Add custom permission canUseFLSAuraApp to required user or profile
+- Navigate to FLS_Profile_Filter\_\_mdt custom metadata and create profile filters if needed
 - open org lightning url/c/flsAuraApp.app
 
 # How to use
