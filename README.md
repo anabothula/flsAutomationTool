@@ -14,5 +14,7 @@ https://github.com/anabothula/flsAutomationTool/assets/76002082/1e17ec8d-d209-4a
 - Set FLS by selecting rows and columns or by manually for each cell and click on Save
 https://github.com/anabothula/flsAutomationTool/assets/76002082/3f5dd51d-d2c6-42ff-bb1e-788908554afa
 
--
+- FLS Dataload - Upload the file which you exported from any other org
+https://github.com/anabothula/flsAutomationTool/assets/76002082/2dcb702c-e5cf-40b7-9dd0-f314a79cb541
+
 
